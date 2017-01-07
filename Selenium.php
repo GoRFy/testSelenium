@@ -14,10 +14,19 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->setBrowser('firefox');
     }
 
-    public function testValidFormSubmission()
+    /*public function testValidTitle()
     {
         $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
         $this->assertEquals('SPORT NATION | WORLD WIDE', $this->title());
+    }*/
+
+    public function testValidFormSubscription()
+    {
+        $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
+        $this->byId('email')->value('lambot.rom@gmail.com');
+        $this->byId('username')->value('GoRFy');
+        $this->byCssSelector('.form_subscription')->submit();
+        sleep(10);
     }
 
     public function tearDown()
