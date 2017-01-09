@@ -26,6 +26,7 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->byId('email')->value('lambot.rom@gmail.com');
         $this->byId('username')->value('TestingRootBruh');
         $this->byCssSelector('.form_subscription')->submit();
+        sleep(1);
         $text = $this->byId("errorMsg")->text();
         $this->assertEquals("Email incorrect ou deja existante", $text, "Email incorrect ou deja existante");
         sleep(5);
@@ -37,9 +38,10 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->byId('email')->value('lambot.rom14010@gmail.com');
         $this->byId('username')->value('GoRFy');
         $this->byCssSelector('.form_subscription')->submit();
+        sleep(1);
         $text = $this->byId("errorMsg")->text();
         $this->assertEquals("Pseudonyme deja existant", $text, "Pseudonyme deja existant");
-        sleep(5);
+        sleep(3);
     }
 
     public function testFormInvalidEmailAndUsername()
@@ -48,11 +50,12 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->byId('email')->value('lambot.rom@gmail.com');
         $this->byId('username')->value('GoRFy');
         $this->byCssSelector('.form_subscription')->submit();
+        sleep(1);
         $text = $this->byId("errorMsg")->text();
         $this->assertEquals("Email incorrect ou deja existante
 Pseudonyme deja existant", $text, "Email incorrect ou deja existante
 Pseudonyme deja existant");
-        sleep(5);
+        sleep(3);
     }
 
     public function tearDown()
