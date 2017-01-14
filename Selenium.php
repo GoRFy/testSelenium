@@ -58,6 +58,15 @@ Pseudonyme deja existant");
         sleep(3);
     }
 
+    public function testConnexion()
+    {
+        $this->url('http://romainlambot.fr/ninjav2/user/login');
+        $this->byName('email')->value('elyes.elbahri77@gmail.com');
+        $this->byId('password')->value('Testtest77');
+        $this->byCssSelector('')->submit();
+        sleep(1);
+    }
+
     public function tearDown()
     {
         $this->stop();
