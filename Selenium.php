@@ -14,12 +14,6 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->setBrowser('firefox');
     }
 
-    /*public function testValidTitle()
-    {
-        $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
-        $this->assertEquals('SPORT NATION | WORLD WIDE', $this->title());
-    }*/
-
 //     public function testFormInvalidEmail()
 //     {
 //         $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
@@ -58,17 +52,10 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
 //         sleep(3);
 //     }
 
-    // public function testConnexionEtCreationDuneEquipe()
+    // public function testConnexionAndCreateTeam()
     // {
-    //     // Connexion
-    //     $this->url('http://romainlambot.fr/ninjav2/user/login');
-    //     $this->byName('email')->value('elyes.elbahri77@gmail.com');
-    //     $this->byName('password')->value('Testtest');
-    //     sleep(1);
-    //     $this->byName('submit')->submit();
-    //     sleep(1);
-    //
-    //     // Création d'une team
+    //     self::connexion();
+
     //     $this->url('http://romainlambot.fr/ninjav2/team/create');
     //     $this->byName('teamName')->value('Team Selenium');
     //     $this->byName('description')->value('Les tests c\'est la vie !');
@@ -78,7 +65,62 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
     //     sleep(1);
     // }
 
-    public function testConnextionEtCreationDunEvenement()
+    // public function testConnextionAndCreateEvent()
+    // {
+    //     self::connexion();
+
+    //     $this->url('http://romainlambot.fr/ninjav2/event/create');
+    //     $this->byName('name')->value('Merry SeleniumTime');
+    //     $this->byName('description')->value('Test évenement Selenium');
+    //     $this->byName('from_date')->value('31/12/2017');
+    //     $this->byName('from_time')->value('08:00');
+    //     $this->byName('to_date')->value('31/12/2017');
+    //     $this->byName('to_time')->value('23:59');
+    //     $this->byName('joignable_until')->value('01/01/2017');
+    //     $this->byName('joignable_until_time')->value('00:01');
+    //     $this->byName('location')->value('ESGI');
+    //     $this->byName('nb_people_max')->value('20');
+    //     $this->byName('sport')->value('phpunit');
+    //     sleep(1);
+    //     $this->byName('submit')->submit();
+    //     sleep(3);
+    // }
+
+    public function testConnexionAndCheckTeamInformation()
+    {
+        self::connexion();
+
+        $this->url('http://romainlambot.fr/ninjav2/team/edit/120');
+        $teamName    = $this->byName('teamName');
+        $description = $this->byName('description');
+        $sport       = $this->byName('sport');
+
+        $this->assertEquals($teamName, 'azagy wow');
+        $this->assertEquals($description, 'aled');
+        $this->assertEquals($sport, 'kale ouf puty');
+        sleep(2);
+    }
+
+    public function testConnexionAndEditTeam() // np pas d'upload de fichier
+    {
+        self::connexion();
+
+        // Modificatin des données d'une équipe
+        $this->url('http://romainlambot.fr/ninjav2/team/edit/120');
+
+        $this->byName('teamName')->text('');
+        $this->byName('description')->text('');
+        $this->byName('sport')->text('');
+
+        $this->byName('teamName')->value('SeleniumTest');
+        $this->byName('description')->value('Test changement de description');
+        $this->byName('sport')->value('waller');
+
+        $this->byName('submit')->submit();
+        sleep(2);
+    }
+
+    public function connexion()
     {
         // Connexion
         $this->url('http://romainlambot.fr/ninjav2/user/login');
@@ -86,24 +128,7 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->byName('password')->value('Testtest');
         sleep(1);
         $this->byName('submit')->submit();
-        sleep(3);
-
-        // Création d'un évenement
-        $this->url('http://romainlambot.fr/ninjav2/event/create');
-        $this->byName('name')->value('Merry SeleniumTime');
-        $this->byName('description')->value('Test évenement Selenium');
-        $this->byName('from_date')->value('31/12/2017');
-        $this->byName('from_time')->value('08:00');
-        $this->byName('to_date')->value('31/12/2017');
-        $this->byName('to_time')->value('23:59');
-        $this->byName('joignable_until')->value('01/01/2017');
-        $this->byName('joignable_until_time')->value('00:01');
-        $this->byName('location')->value('ESGI');
-        $this->byName('nb_people_max')->value('20');
-        $this->byName('sport')->value('phpunit');
         sleep(1);
-        $this->byName('submit')->submit();
-        sleep(3);
     }
 
     public function tearDown()
