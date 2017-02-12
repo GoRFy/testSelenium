@@ -13,7 +13,7 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
         $this->setBrowserUrl('http://romainlambot.fr');
         $this->setBrowser('firefox');
     }
-
+        // subscribe failed : invalid email
 //     public function testFormInvalidEmail()
 //     {
 //         $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
@@ -25,7 +25,7 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
 //         $this->assertEquals("Email incorrect ou deja existante", $text, "Email incorrect ou deja existante");
 //         sleep(5);
 //     }
-//
+        // subscribe failed : invalid username
 //     public function testFormInvalidUsername()
 //     {
 //         $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
@@ -37,7 +37,7 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
 //         $this->assertEquals("Pseudonyme deja existant", $text, "Pseudonyme deja existant");
 //         sleep(3);
 //     }
-//
+        // subscribe failed : invalid email & username
 //     public function testFormInvalidEmailAndUsername()
 //     {
 //         $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
@@ -65,6 +65,38 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
     //     sleep(1);
     // }
 
+    public function testConnexionAndCreateTeamWithNameAlreadyTaken()
+    {
+        self::connexion();
+
+        $this->url('http://romainlambot.fr/ninjav2/team/create');
+        $this->byName('teamName')->value('Team Selenium');
+        $this->byName('description')->value('Test création team nom déjà pris.');
+        $this->byName('sport')->value('Selenium');
+        sleep(1);
+        $this->byName('submit')->submit();
+        sleep(1);
+        $text = $this->byId("errorMsg")->text();
+        $this->assertEquals('Nom d\'equipe incorrecte ou deja existant', $text);
+        sleep(2);
+    }
+
+    public function testConnexionAndCreateTeamWithNameTooShort()
+    {
+        self::connexion();
+
+        $this->url('http://romainlambot.fr/ninjav2/team/create');
+        $this->byName('teamName')->value('a');
+        $this->byName('description')->value('Test création team nom déjà pris.');
+        $this->byName('sport')->value('Selenium');
+        sleep(1);
+        $this->byName('submit')->submit();
+        sleep(1);
+        $text = $this->byId("errorMsg")->text();
+        $this->assertEquals('Nom d\'equipe incorrecte ou deja existant', $text);
+        sleep(2);
+    }
+
     // public function testConnextionAndCreateEvent()
     // {
     //     self::connexion();
@@ -86,39 +118,39 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
     //     sleep(3);
     // }
 
-    public function testConnexionAndCheckTeamInformation()
-    {
-        self::connexion();
+    // public function testConnexionAndCheckTeamInformation()
+    // {
+    //     self::connexion();
+    //
+    //     $this->url('http://romainlambot.fr/ninjav2/team/edit/120');
+    //     $teamName    = $this->byName('teamName');
+    //     $description = $this->byName('description');
+    //     $sport       = $this->byName('sport');
+    //
+    //     $this->assertEquals($teamName, 'azagy wow');
+    //     $this->assertEquals($description, 'aled');
+    //     $this->assertEquals($sport, 'kale ouf puty');
+    //     sleep(2);
+    // }
 
-        $this->url('http://romainlambot.fr/ninjav2/team/edit/120');
-        $teamName    = $this->byName('teamName');
-        $description = $this->byName('description');
-        $sport       = $this->byName('sport');
-
-        $this->assertEquals($teamName, 'azagy wow');
-        $this->assertEquals($description, 'aled');
-        $this->assertEquals($sport, 'kale ouf puty');
-        sleep(2);
-    }
-
-    public function testConnexionAndEditTeam() // np pas d'upload de fichier
-    {
-        self::connexion();
-
-        // Modificatin des données d'une équipe
-        $this->url('http://romainlambot.fr/ninjav2/team/edit/120');
-
-        $this->byName('teamName')->text('');
-        $this->byName('description')->text('');
-        $this->byName('sport')->text('');
-
-        $this->byName('teamName')->value('SeleniumTest');
-        $this->byName('description')->value('Test changement de description');
-        $this->byName('sport')->value('waller');
-
-        $this->byName('submit')->submit();
-        sleep(2);
-    }
+    // public function testConnexionAndEditTeam() // np pas d'upload de fichier
+    // {
+    //     self::connexion();
+    //
+    //     // Modificatin des données d'une équipe
+    //     $this->url('http://romainlambot.fr/ninjav2/team/edit/120');
+    //
+    //     $this->byName('teamName')->text('');
+    //     $this->byName('description')->text('');
+    //     $this->byName('sport')->text('');
+    //
+    //     $this->byName('teamName')->value('SeleniumTest');
+    //     $this->byName('description')->value('Test changement de description');
+    //     $this->byName('sport')->value('waller');
+    //
+    //     $this->byName('submit')->submit();
+    //     sleep(2);
+    // }
 
     public function connexion()
     {
