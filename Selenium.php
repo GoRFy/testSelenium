@@ -3,8 +3,7 @@
 require_once 'vendor/autoload.php';
 require_once 'helpers.php';
 
-class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
-{
+class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase{
 
     protected function setUp()
     {
@@ -52,6 +51,30 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
 //         sleep(3);
 //     }
 
+    // Ne fonctionne pas
+    // public function testSubscribeSuccess(){
+    //     $this->url('http://romainlambot.fr/ninjav2/user/subscribe');
+    //     $email = "eelbahri@pontaul.combault.fr";
+    //     $this->byId('email')->value($email);
+    //     $this->byId('username')->value('User2312');
+    //     $this->byCssSelector('.form_subscription')->submit();
+    //     sleep(1);
+    //     $text = $this->byClassName("info")->text();
+    //     $this->assertEquals("Email envoyé à ".$email, $text, "Email envoyé à ".$email);
+    //     sleep(3);
+    // }
+    // Ne fonctionne pas
+    // public function testConnexionFailed(){
+    //     $this->url('http://romainlambot.fr/ninjav2/user/login');
+    //     $this->byName('email')->value('testfail@gmail.com');
+    //     $this->byName('password')->value('dfnefz');
+    //     sleep(1);
+    //     $this->byName('submit')->submit();
+    //     sleep(1);
+    //     $text = $this->byClass("info")->text();
+    //     $this->assertEquals("Combinaison email/mot de passe incorrecte ou inexistante !", $text);
+    // }
+
     // public function testConnexionAndCreateTeam()
     // {
     //     self::connexion();
@@ -65,37 +88,38 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
     //     sleep(1);
     // }
 
-    public function testConnexionAndCreateTeamWithNameAlreadyTaken()
-    {
-        self::connexion();
+    // public function testConnexionAndCreateTeamWithNameAlreadyTaken()
+    // {
+    //     self::connexion();
+    //
+    //     $this->url('http://romainlambot.fr/ninjav2/team/create');
+    //     $this->byName('teamName')->value('Team Selenium');
+    //     $this->byName('description')->value('Test création team nom déjà pris.');
+    //     $this->byName('sport')->value('Selenium');
+    //     sleep(1);
+    //     $this->byName('submit')->submit();
+    //     sleep(1);
+    //     $text = $this->byId("errorMsg")->text();
+    //     $this->assertEquals('Nom d\'equipe incorrecte ou deja existant', $text);
+    //     sleep(2);
+    // }
 
-        $this->url('http://romainlambot.fr/ninjav2/team/create');
-        $this->byName('teamName')->value('Team Selenium');
-        $this->byName('description')->value('Test création team nom déjà pris.');
-        $this->byName('sport')->value('Selenium');
-        sleep(1);
-        $this->byName('submit')->submit();
-        sleep(1);
-        $text = $this->byId("errorMsg")->text();
-        $this->assertEquals('Nom d\'equipe incorrecte ou deja existant', $text);
-        sleep(2);
-    }
+    // public function testConnexionAndCreateTeamWithNameTooShort(){
+    //     self::connexion();
+    //
+    //     $this->url('http://romainlambot.fr/ninjav2/team/create');
+    //     $this->byName('teamName')->value('a');
+    //     $this->byName('description')->value('Test création team nom déjà pris.');
+    //     $this->byName('sport')->value('Selenium');
+    //     sleep(1);
+    //     $this->byName('submit')->submit();
+    //     sleep(1);
+    //     $text = $this->byId("errorMsg")->text();
+    //     $this->assertEquals('Nom d\'equipe incorrecte ou deja existant', $text);
+    //     sleep(2);
+    // }
 
-    public function testConnexionAndCreateTeamWithNameTooShort()
-    {
-        self::connexion();
 
-        $this->url('http://romainlambot.fr/ninjav2/team/create');
-        $this->byName('teamName')->value('a');
-        $this->byName('description')->value('Test création team nom déjà pris.');
-        $this->byName('sport')->value('Selenium');
-        sleep(1);
-        $this->byName('submit')->submit();
-        sleep(1);
-        $text = $this->byId("errorMsg")->text();
-        $this->assertEquals('Nom d\'equipe incorrecte ou deja existant', $text);
-        sleep(2);
-    }
 
     // public function testConnextionAndCreateEvent()
     // {
@@ -152,9 +176,37 @@ class SeleniumTest extends PHPUnit_Extensions_Selenium2TestCase
     //     sleep(2);
     // }
 
-    public function connexion()
-    {
-        // Connexion
+    // public function testConnexionAndFailedEditTeamNameTooShort() // doesn't work
+    // {
+    //     self::connexion();
+    //
+    //     // Modificatin des données d'une équipe
+    //     $this->url('http://romainlambot.fr/ninjav2/team/edit/120');
+    //
+    //     $this->byName('teamName')->text('');
+    //     $this->byName('description')->text('');
+    //     $this->byName('sport')->text('');
+    //
+    //     $this->byName('teamName')->value('a');
+    //     $this->byName('description')->value('test edit team fail');
+    //     $this->byName('sport')->value('selen');
+    //
+    //     $this->byName('submit')->submit();
+    //     sleep(2);
+    //     $this->assertEquals("Nom d\'equipe incorrecte ou deja existant", $text);
+    // }
+    // 
+    // public function testAskToJoinATeam(){
+    //     self::connexion();
+    //
+    //     $this->url('http://romainlambot.fr/ninjav2/team/show/100');
+    //     $this->byName("askToJoin")->submit();
+    //     $this->byName("message")->value('test demande');
+    //     $this->byName("submit")->submit();
+    //     // probleme de nom
+    // }
+
+    public function connexion(){
         $this->url('http://romainlambot.fr/ninjav2/user/login');
         $this->byName('email')->value('elyes.elbahri77@gmail.com');
         $this->byName('password')->value('Testtest');
